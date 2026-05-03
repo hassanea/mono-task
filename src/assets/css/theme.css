@@ -1,0 +1,18 @@
+@theme {
+  --color-primary: #475867;
+  --color-primary-light: #6b7985;
+  --color-secondary: #2c4e6d;
+  --color-tertiary: #6d9bc3;
+  --color-quaternary: #0f9397;
+  --color-quinary: #0a4aaa;
+  --color-alternative: #dbe9f4;
+  --color-light: #fcfbfc;
+  --color-dark: #000814;
+  --color-selection: #9ec6d6;
+  --color-heads: #313131;
+  --font-sans: "Open Sans", sans-serif;
+  --font-sans2: "Roboto", sans-serif;
+  --text-2-5xl: 1.75rem;
+  --text-3-5xl: 2rem;
+  --text-4-5xl: 2.5rem;
+}
