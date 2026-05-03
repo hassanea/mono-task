@@ -39,10 +39,12 @@ export default {
 }
 
 .main-header .main-title {
-  font-size: 2rem;
+  font-size: 2.5rem;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.25rem;
 }
 
 .main-header .main-title::first-letter {
-  font-size: 180%;
+  font-size: 200%;
 }
 </style>

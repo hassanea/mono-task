@@ -1,6 +1,6 @@
 @theme {
-  --color-primary: #475867;
-  --color-primary-light: #6b7985;
+  --color-primary: #b9bbc4;
+  --color-primary-light: #dcdde2;
   --color-secondary: #2c4e6d;
   --color-tertiary: #6d9bc3;
   --color-quaternary: #0f9397;
@@ -10,8 +10,8 @@
   --color-dark: #000814;
   --color-selection: #9ec6d6;
   --color-heads: #313131;
-  --font-sans: "Open Sans", sans-serif;
-  --font-sans2: "Roboto", sans-serif;
+  --font-sans: 'Bebas Neue', sans-serif;
+  --font-sans2: 'Lato', sans-serif;
   --text-2-5xl: 1.75rem;
   --text-3-5xl: 2rem;
   --text-4-5xl: 2.5rem;

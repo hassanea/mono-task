@@ -30,11 +30,10 @@ body {
 }
 
 body {
-  font: normal 400 1rem / 1.5 var(--base-font);
-  overflow-x: hidden;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  @apply not-italic font-normal text-base leading-normal font-sans2 overflow-x-hidden;
 }
 
 /* ::selection {
