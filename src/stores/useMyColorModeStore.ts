@@ -1,15 +1,9 @@
-/* useMyColorModeis a custom composable for Nuxt 3 and Vue 3 that assists with managing a user's preferred color scheme (mode) reactively.
-   Developed by: Evan Hassan | Version: v1.0 */
+import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref, computed, watch, toValue } from 'vue'
 import { useMediaQuery, usePreferredDark, useSupported } from '@vueuse/core'
 import { getModeFromStorage, setModeToStorage, initializeMediaFeature } from '@/utils'
-// getModeFromStorage retrieves the current color mode from localStorage if it exists.
-// setModeToStorage sets and stores the current color mode to localStorage.
 
-export const useMyColorMode = (
-  fallback: string = 'dark',
-  storageOption: string = 'localStorage',
-) => {
+export const useMyColorModeStore = defineStore('useMyColorModeStore', () => {
   // reactive ref variable that takes a callback and checks to see if matchMedia is supported and available on Vue component mount.
   const isSupported = useSupported(
     () => window && 'matchMedia' in window && window.matchMedia('(prefers-color-scheme: dark)'),
@@ -36,7 +30,10 @@ export const useMyColorMode = (
   const isDarkMode = ref(toValue(darkMode))
   const isLightMode = ref(toValue(lightMode))
 
-  const setMyColorMode = function (fallback: string, storageOption: string) {
+  const fallback = 'dark'
+  const storageOption = 'localStorage'
+
+  function setMyColorMode(fallback: string, storageOption: string) {
     //  hasColorModeInStorage stores the result of calling getModeFromStorage by retrieving the color mode from localStorage if it exists otherwise, returns null.
     const hasColorModeInStorage = getModeFromStorage(storageOption, 'color-mode')
 
@@ -49,9 +46,19 @@ export const useMyColorMode = (
     ) {
       colorMode.value = fallback
       setModeToStorage(storageOption, 'color-mode', colorMode.value)
-      console.log(!hasColorModeInStorage && (isDarkMode.value || isLightMode.value))
     } else {
       colorMode.value = hasColorModeInStorage
+    }
+  }
+
+  // handleColorThemeChange function performs the toggle switch state change and light / dark classes.
+  // Client-Side
+  function handleColorThemeChange() {
+    isDarkMode.value = !isDarkMode.value
+    if (isDarkMode.value) {
+      colorMode.value = 'dark'
+    } else {
+      colorMode.value = 'light'
     }
   }
 
@@ -66,17 +73,6 @@ export const useMyColorMode = (
   const setColorSwitchLabel = computed(() => {
     return `Toggle ${colorMode.value === 'dark' ? 'Light' : 'Dark'} Mode`
   })
-
-  // handleColorThemeChange function performs the toggle switch state change and light / dark classes.
-  // Client-Side
-  const handleColorThemeChange = function () {
-    isDarkMode.value = !isDarkMode.value
-    if (isDarkMode.value) {
-      colorMode.value = 'dark'
-    } else {
-      colorMode.value = 'light'
-    }
-  }
 
   // Sets up an watcher to run anytime when colorMode's value or isDarkMode's value is changed then calls setColorModeToStorage to set and update the color scheme to localStorage.
   // Client-Side
@@ -98,4 +94,8 @@ export const useMyColorMode = (
     setMyColorMode,
     cleanUpMyColorMode,
   }
+})
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useMyColorModeStore, import.meta.hot))
 }

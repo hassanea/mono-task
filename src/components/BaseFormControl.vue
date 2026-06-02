@@ -4,13 +4,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'BaseFormControl',
-}
+<script lang="ts" setup>
+defineOptions({
+  name: "BaseFormControl",
+});
 </script>
 
-<style scoped>
+<style lang="css" scoped>
 .goal-form-control {
   width: 100%;
   height: 100%;
@@ -22,5 +22,4 @@ export default {
 .goal-form-control.goal-form-control-label {
   justify-content: flex-start;
 }
-
 </style>

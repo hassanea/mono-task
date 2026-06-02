@@ -1,39 +1,24 @@
 <template>
-  <footer class="main-footer bg-[#D42758] dark:bg-[#7f1734] text-light">
+  <footer
+    class="text-light font-sans2 flex h-auto w-full flex-row flex-nowrap items-center justify-center bg-[#BF4f51] px-8 py-7 text-center text-lg leading-normal font-bold not-italic md:text-xl dark:bg-[#7f1734]"
+  >
     <p class="main-footer-copyright">{{ copyrightInfo }}</p>
   </footer>
 </template>
 
-<script>
-export default {
-  name: 'BaseFooter',
-  props: {
-    year: {
-      type: Number,
-      required: true,
-    },
+<script lang="ts" setup>
+import { computed } from "vue";
+defineOptions({
+  name: "BaseFooter",
+});
+const props = defineProps({
+  year: {
+    type: Number,
+    required: true,
   },
-  computed: {
-    copyrightInfo() {
-      return `© ${this.year} All Right Reserved.`
-    },
-  },
-}
+});
+
+const copyrightInfo = computed(() => `© ${props.year} All Right Reserved.`);
 </script>
 
-<style scoped>
-.main-footer {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  text-align: center;
-  width: 100%;
-  height: auto;
-  padding: 1.75rem 2rem;
-  font-weight: bolder;
-  font-size: 1.25rem;
-}
-/* .main-footer .main-footer-copyright {
-  padding-bottom: 1rem;
-} */
-</style>
+<style lang="css" scoped></style>
