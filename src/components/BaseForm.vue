@@ -1,14 +1,14 @@
 <template>
+  <!-- Create -->
   <form
     v-if="variant === 'create'"
-    class="goal-form dark:bg-form-dark/50 bg-form-light/50"
+    class="goal-form dark:bg-form-dark/50 bg-form-light/50 focus-within:border focus-within:border-solid focus-within:border-[#ffd700] focus-within:outline-0"
     @submit.prevent="addTask"
   >
-    <!-- <h2 class="goal-form-title">{{ title }}</h2> -->
     <slot>
-      <base-form-control class="goal-form-control-label">
+      <!-- <base-form-control class="goal-form-control-label">
         <span class="required"></span>
-        <label class="goal-form-label" for="name">Task Name:</label>
+        <base-input-label :id="taskNameId" variant="input"> Task Name: </base-input-label>
       </base-form-control>
       <base-form-control>
         <input
@@ -16,11 +16,19 @@
           class="goal-input"
           v-model="task.name"
           placeholder="Define Your Goal"
-          id="name"
+          :id="taskNameId"
         />
-      </base-form-control>
+      </base-form-control> -->
 
-      <base-form-control class="goal-form-control-label">
+      <base-input
+        v-model="task.name"
+        label="Task Name:"
+        node="input"
+        :is-required="true"
+        placeholder="Define Your Task"
+      />
+
+      <!-- <base-form-control class="goal-form-control-label">
         <label class="goal-form-label" for="duration">Task Frequency:</label>
       </base-form-control>
       <base-form-control>
@@ -34,11 +42,60 @@
             {{ duration }}
           </option>
         </select>
+      </base-form-control> -->
+
+      <!-- showLabel: {
+    type: Boolean,
+    required: false,
+    default: true,
+  },
+  label: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  choices: {
+    type: Array,
+    required: false,
+    default: () => {
+      return ["Alpha", "Beta", "Gamma", "Delta"];
+    },
+  },
+  selectMultiple: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  isDisabled: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  isReadOnly: {
+    type: Boolean,
+    required: false,
+    default: false,
+  }, -->
+
+      <base-select
+        v-model="task.duration"
+        label="Task Frequency:"
+        description="Lorem Ipsum Dolor Amorcit..."
+        :choices="durations"
+      />
+
+      <base-form-control>
+        <base-radio-button v-model="task.priority" :legend :choices="priorities" />
       </base-form-control>
 
-      <base-form-control class="goal-form-control-label">
+      <!-- <base-form-control class="goal-form-control-label">
         <label class="goal-form-label" for="description">Task Description:</label>
       </base-form-control>
+
       <base-form-control>
         <textarea
           class="goal-input"
@@ -48,7 +105,41 @@
           v-model="task.description"
           placeholder="Enter your Goal's description"
         ></textarea>
-      </base-form-control>
+      </base-form-control> -->
+
+      <base-input
+        v-model="task.description"
+        label="Task Description:"
+        node="textarea"
+        placeholder="Enter your Task's description"
+      />
+
+      <!--
+
+        label: {
+    type: String,
+    required: true,
+  },
+  node: {
+    type: String,
+    required: false,
+    default: "input",
+    validator(value: string) {
+      return ["input", "textarea"].includes(value);
+    },
+  },
+  isRequired: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  placeholder: {
+    type: String,
+    required: false,
+    default: "",
+  },
+
+      -->
 
       <base-form-control>
         <base-button variant="btn-submit" type="submit" label="Create Task">
@@ -59,12 +150,12 @@
     </slot>
   </form>
 
+  <!-- Update -->
   <form
     v-if="variant === 'update' && Object.values(props.currentGoal).length > 0"
-    class="goal-form dark:bg-form-dark/50 bg-form-light/50"
+    class="goal-form dark:bg-form-dark/50 bg-form-light/50 focus-within:border focus-within:border-solid focus-within:border-[#ffd700] focus-within:outline-0"
     @submit.prevent="updateTask"
   >
-    <!-- <h2 class="goal-form-title">{{ title }}</h2> -->
     <slot>
       <base-form-control class="goal-form-control-label">
         <span class="required"></span>
@@ -97,9 +188,28 @@
         </select>
       </base-form-control>
 
+      <base-form-control>
+        <base-radio-button v-model="updatedTask.priority" :legend :choices="priorities" />
+      </base-form-control>
+
       <base-form-control class="goal-form-control-label">
         <label class="goal-form-label" for="description">Task Description:</label>
       </base-form-control>
+
+      <base-form-control>
+        <base-switch
+          :mode="taskStatus"
+          :model-value="updatedTask.completed"
+          label="Update Task completion Status"
+          description="Set Task completion Status."
+          @update:model-value="updateTaskComplete"
+        >
+          <template #icon>
+            <font-awesome-icon :icon="setTaskSwitchIcon" />
+          </template>
+        </base-switch>
+      </base-form-control>
+
       <base-form-control>
         <textarea
           class="goal-input"
@@ -111,23 +221,42 @@
         ></textarea>
       </base-form-control>
 
-      <base-form-control>
+      <div
+        class="flex flex-1/2 flex-col flex-nowrap items-center justify-center gap-2.5 md:flex-row"
+      >
         <base-button variant="btn-submit edit" type="submit" label="Edit Task">
           <template #icon>
             <font-awesome-icon icon="fa-solid fa-pen" />
           </template>
           <template #default></template>
         </base-button>
-      </base-form-control>
+
+        <base-button
+          variant="btn-submit cancel"
+          type="button"
+          label="Cancel"
+          @click="handleCancelUpdateTask"
+          @keydown.enter="handleCancelUpdateTask"
+        >
+          <template #icon>
+            <font-awesome-icon icon="fa-solid fa-xmark" />
+          </template>
+          <template #default></template>
+        </base-button>
+      </div>
     </slot>
   </form>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 import monoTaskData from "@/assets/data/monoTaskData.json";
 import BaseFormControl from "@/components/BaseFormControl.vue";
-import BaseButton from "@/components/BaseButton.vue";
+import BaseRadioButton from "@/components/BaseRadioButton.vue";
+import BaseSwitch from "@/components/BaseSwitch.vue";
+// import BaseInputLabel from "@/components/BaseInputLabel.vue";
+import BaseInput from "@/components/BaseInput.vue";
+import BaseSelect from "@/components/BaseSelect.vue";
 
 defineOptions({
   name: "BaseForm",
@@ -154,18 +283,20 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["createGoal", "updateGoal"]);
+const emit = defineEmits(["create-task", "update-task", "cancel"]);
 
 const task = ref({
   name: "",
   description: "",
   duration: "",
+  priority: "Low",
 });
 
 const updatedTask = ref({
   name: "",
   description: "",
   duration: "",
+  priority: "Low",
   completed: false,
 });
 
@@ -174,43 +305,73 @@ onMounted(() => {
     updatedTask.value.name = props.currentGoal.name;
     updatedTask.value.description = props.currentGoal.description;
     updatedTask.value.duration = props.currentGoal.duration;
+    updatedTask.value.priority = props.currentGoal.priority;
     updatedTask.value.completed = props.currentGoal.completed;
   } else return;
 });
 
 const {
-  form: { durations },
+  form: {
+    durations,
+    priorities: { legend, priorities },
+  },
 } = monoTaskData;
+
+const taskStatus = computed(() => {
+  if (!updatedTask.value.completed || Object.values(updatedTask.value).length === 0)
+    return "incomplete";
+  return updatedTask.value.completed ? "complete" : "incomplete";
+});
+
+const resetTaskCreationData = () => {
+  task.value.name = "";
+  task.value.description = "";
+  task.value.duration = "";
+  task.value.priority = "Low";
+};
+
+const resetUpdateTaskData = () => {
+  updatedTask.value.name = "";
+  updatedTask.value.description = "";
+  updatedTask.value.duration = "";
+  updatedTask.value.priority = "Low";
+  updatedTask.value.completed = false;
+};
 
 const addTask = () => {
   const data = {
     name: task.value.name,
     duration: task.value.duration,
     description: task.value.description,
+    priority: task.value.priority,
   };
-  emit("createGoal", data);
-  task.value.name = "";
-  task.value.description = "";
-  task.value.duration = "";
+  emit("create-task", data);
+  resetTaskCreationData();
 };
 
 const updateTask = () => {
-  emit("updateGoal", updatedTask.value);
-  updatedTask.value.name = "";
-  updatedTask.value.description = "";
-  updatedTask.value.duration = "";
-  updatedTask.value.completed = false;
+  emit("update-task", updatedTask.value);
+  resetUpdateTaskData();
+};
+
+const updateTaskComplete = () => (updatedTask.value.completed = !updatedTask.value.completed);
+
+const setTaskSwitchIcon = computed(() =>
+  updatedTask.value.completed ? "fa-solid fa-check" : "fa-solid fa-close",
+);
+
+const resetFormData = () => {
+  resetTaskCreationData();
+  resetUpdateTaskData();
+};
+
+const handleCancelUpdateTask = () => {
+  resetUpdateTaskData();
+  emit("cancel");
 };
 
 onUnmounted(() => {
-  task.value.name = "";
-  task.value.description = "";
-  task.value.duration = "";
-
-  updatedTask.value.name = "";
-  updatedTask.value.description = "";
-  updatedTask.value.duration = "";
-  updatedTask.value.completed = false;
+  resetFormData();
 });
 </script>
 
@@ -232,7 +393,7 @@ onUnmounted(() => {
 
   color: #000;
   min-height: 300px;
-  max-height: 37.5rem;
+  max-height: 45rem;
   display: flex;
   flex-flow: column nowrap;
   margin: 0 auto;

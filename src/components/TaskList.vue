@@ -1,6 +1,6 @@
 <template>
   <ul
-    class="container mx-auto flex h-auto w-full flex-col flex-wrap items-center justify-center gap-3 md:flex-row"
+    class="container mx-auto flex h-auto w-full flex-col flex-wrap items-center justify-center gap-5.5 p-4 md:flex-row md:gap-3"
   >
     <slot></slot>
   </ul>
@@ -12,16 +12,4 @@ defineOptions({
 });
 </script>
 
-<style lang="css" scoped>
-.goal-list {
-  @apply container;
-  width: 100%;
-  height: auto;
-  margin: 4rem auto;
-  display: flex;
-  flex-flow: row wrap;
-  gap: 0.75rem;
-  align-items: center;
-  justify-content: center;
-}
-</style>
+<style lang="css" scoped></style>

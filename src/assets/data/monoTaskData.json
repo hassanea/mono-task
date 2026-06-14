@@ -8,13 +8,16 @@
       "Hourly",
       "Daily",
       "Every Other Day",
-      "On Specific Day",
       "Weekly",
       "Biweekly",
       "Monthly",
       "Quarterly",
       "Annually"
     ],
+    "priorities": {
+      "legend": "Select Task Priority:",
+      "priorities": ["Low", "Medium", "High"]
+    },
     "dayDurations": [
       "Every Sunday",
       "Every Monday",

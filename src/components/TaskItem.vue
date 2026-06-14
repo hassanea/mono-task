@@ -1,25 +1,25 @@
 <template>
   <li
-    class="goal-item border border-solid border-[#7f1734]"
+    class="task-item flex h-auto list-none flex-col flex-nowrap items-center justify-center rounded-[20px] border border-solid border-[#7f1734] drop-shadow-md drop-shadow-gray-500"
     :class="{
       'flex-[100%] lg:flex-[48%]': count % 2 === 0,
       'flex-[100%] lg:flex-1/4': count % 4 === 0,
       'flex-[100%] lg:flex-[32%]': count % 3 === 0,
     }"
   >
-    <base-article>
+    <base-article class="p-6.5 md:p-7.5 lg:p-8">
       <h3
-        class="goal-title font-sans2 text-center text-lg leading-normal font-bold tracking-wide italic md:text-xl"
+        class="task-title font-sans2 mt-1 mb-2 text-center text-lg leading-normal font-bold tracking-wide italic md:mb-3 md:text-xl"
         :class="taskCompletedClass"
       >
         {{ task.name }}
       </h3>
       <p
-        class="font-sans2 text-center text-base leading-normal font-medium md:text-lg lg:text-left"
+        class="font-sans2 mx-0 mt-3.5 mb-3 line-clamp-2 text-center text-base leading-normal font-medium md:my-4 md:text-lg lg:text-left"
       >
         {{ task.description }}
       </p>
-      <div class="flex flex-row flex-nowrap items-center justify-center gap-2">
+      <div class="-mt-0.5 flex flex-row flex-nowrap items-center justify-center gap-2 md:mt-2">
         <base-button
           type="button"
           label="Delete Task"
@@ -48,7 +48,7 @@
           :label="completeTaskBtnLabel"
           v-tooltip.right="completeTooltip"
         >
-          <font-awesome-icon :icon="completeTaskIconBtn" />
+          <font-awesome-icon :icon="completeTaskIconBtn" size="lg" />
         </base-button>
       </div>
     </base-article>
@@ -120,11 +120,11 @@ const completeTaskIconBtn = computed(() =>
   margin-left: 0.25rem;
 }
 
-.goal-item:nth-child(odd) {
+.task-item:nth-child(odd) {
   background: #a3a3a3;
 }
 
-.goal-item:nth-child(even) {
+.task-item:nth-child(even) {
   background: #d9d1d9;
 }
 </style>

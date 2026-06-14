@@ -1,46 +1,71 @@
 <template>
   <default-layout>
-    <template v-if="!update">
-      <base-section class="mb-12">
-        <div class="grid grid-cols-1">
-          <h2
-            class="text-2-5xl mb-6 border-t-0 border-r-0 border-b-[6px] border-l-0 border-double border-black text-center font-bold"
-          >
-            {{ form.create }}
-          </h2>
+    <base-section v-if="!update" class="mb-12">
+      <div class="grid grid-cols-1">
+        <h2
+          class="text-2-5xl mb-6 border-t-0 border-r-0 border-b-[6px] border-l-0 border-double border-black text-center font-bold"
+        >
+          {{ form.create }}
+        </h2>
 
-          <base-form :title="form.create" variant="create" @create-goal="createGoal"></base-form>
-        </div>
-      </base-section>
-    </template>
+        <base-form :title="form.create" variant="create" @create-task="createGoal"></base-form>
+      </div>
+    </base-section>
 
-    <template v-else>
-      <base-section>
-        <div class="grid grid-cols-1">
-          <h2
-            class="text-2-5xl mb-6 border-t-0 border-r-0 border-b-[6px] border-l-0 border-double border-black text-center font-bold"
-          >
-            {{ form.update }}
-          </h2>
+    <base-section v-else>
+      <div class="grid grid-cols-1">
+        <h2
+          class="text-2-5xl mb-6 border-t-0 border-r-0 border-b-[6px] border-l-0 border-double border-black text-center font-bold"
+        >
+          {{ form.update }}
+        </h2>
 
-          <base-form
-            :title="form.update"
-            variant="update"
-            :current-goal="updatedTask"
-            @update-goal="handleUpdateTask"
-          ></base-form>
-        </div>
-      </base-section>
-    </template>
-    <!-- .goal-form-title {
-  font-size: 1.75rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  border-bottom: 6px double #000;
-} -->
+        <base-form
+          :title="form.update"
+          variant="update"
+          :current-goal="updatedTask"
+          @update-task="handleUpdateTask"
+          @cancel="handleCancelTaskUpdate"
+        ></base-form>
+      </div>
+    </base-section>
 
-    <!-- <input type="text" v-model="goalFilter" v-if="goals.length > 0" /> -->
+    <base-input
+      label="Search Tasks"
+      :show-label="false"
+      node="input"
+      placeholder="Search"
+      v-model.trim="goalFilter"
+    />
+
+    <!--   label: {
+    type: String,
+    required: true,
+  },
+  showLabel: {
+    type: Boolean,
+    required: false,
+    default: true,
+  },
+  node: {
+    type: String,
+    required: false,
+    default: "input",
+    validator(value: string) {
+      return ["input", "textarea"].includes(value);
+    },
+  },
+  isRequired: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  placeholder: {
+    type: String,
+    required: false,
+    default: "",
+  }, -->
+
     <!-- <ul class="goal-list" v-if="isSearch && goals.length && searchGoal.length">
       <li class="goal-item" v-for="item in searchGoal" :key="item.name">
         <h3 class="goal-title">{{ item.name }}</h3>
@@ -52,9 +77,9 @@
         <h2 id="tasks-head" class="text-2-5xl mb-8 text-center font-bold tracking-wide uppercase">
           Tasks:
         </h2>
-        <task-list v-if="tasks.length > 0">
+        <task-list v-if="tasks.length > 0 && searchTasks.length > 0">
           <task-item
-            v-for="task in tasks"
+            v-for="task in searchTasks"
             :key="task.id"
             :task="task"
             :count="task.length"
@@ -83,6 +108,7 @@ import { definePage } from "vue-router/dist/experimental/index.js";
 import monoTaskData from "@/assets/data/monoTaskData.json";
 import { v4 as uuidv4 } from "uuid";
 import BaseForm from "@/components/BaseForm.vue";
+import BaseInput from "@/components/BaseInput.vue";
 import TaskList from "@/components/TaskList.vue";
 import TaskItem from "@/components/TaskItem.vue";
 
@@ -122,12 +148,12 @@ const createGoal = (data) => {
   const goal = {
     id: uuidv4(),
     name: data.name,
-    // '' false null undefined NaN 0
     description: data.description || "lorem ipsum dolor amorcit.",
     creationDate: new Date(),
     updateDate: null,
     completed: false,
     duration: data.duration,
+    priority: data.priority,
   };
 
   if (data.name === "") {
@@ -136,6 +162,10 @@ const createGoal = (data) => {
   } else {
     tasks.value.push(goal);
   }
+};
+
+const handleCancelTaskUpdate = () => {
+  update.value = false;
 };
 
 const deleteGoal = (taskId: string) => {
@@ -154,6 +184,7 @@ const handleUpdateTask = (data) => {
   updatedTask.value.description = data.description;
   updatedTask.value.completed = data.completed;
   updatedTask.value.duration = data.duration;
+  updatedTask.value.priority = data.priority;
   updatedTask.value.updateDate = new Date();
   update.value = false;
 };
@@ -163,10 +194,11 @@ const completeGoal = (taskId: string) => {
   updatedTask.value.completed = !updatedTask.value.completed;
 };
 
-const searchGoal = computed(() => {
+const searchTasks = computed(() => {
   if (goalFilter.value) {
     return [...tasks.value].filter((task) => {
-      return task.name.toLowerCase() === goalFilter.value;
+      return task.name.toLowerCase().includes(goalFilter.value.toLowerCase());
+      // task.name.toLowerCase() === goalFilter.value.toLowerCase();
     });
   } else {
     return tasks.value;

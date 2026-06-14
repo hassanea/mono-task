@@ -22,18 +22,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch, useId } from 'vue'
+import { ref, computed, watch, useId } from "vue";
 defineOptions({
-  name: 'BaseSwitch',
-})
+  name: "BaseSwitch",
+});
 
 const props = defineProps({
   mode: {
     type: String,
     required: false,
-    default: 'light',
+    default: "light",
     validator(value: string) {
-      return ['light', 'dark', 'no-preference', 'reduce'].includes(value)
+      return ["light", "dark", "no-preference", "reduce", "incomplete", "complete"].includes(value);
     },
   },
   label: {
@@ -43,67 +43,71 @@ const props = defineProps({
   description: {
     type: String,
     required: false,
-    default: '',
+    default: "",
   },
   modelValue: {
     type: Boolean,
     required: false,
     default: true,
   },
-})
+});
 
-const toggled = ref(props.modelValue)
+const toggled = ref(props.modelValue);
 
-const switchDescId = useId()
+const switchDescId = useId();
 
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(["update:modelValue"]);
 
 const toggleSwitch = () => {
-  toggled.value = !toggled.value
-}
+  toggled.value = !toggled.value;
+};
 
 watch(
   () => props.modelValue,
   (value) => {
-    toggled.value = value
+    toggled.value = value;
   },
   { immediate: true },
-)
+);
 
 watch(toggled, (value) => {
-  emits('update:modelValue', value)
-})
+  emits("update:modelValue", value);
+});
 
 const isChecked = computed(() => {
-  return props.mode === 'dark' || props.mode === 'reduce' ? true : false
-})
+  return props.mode === "dark" || props.mode === "reduce" || props.mode === "complete"
+    ? true
+    : false;
+});
 
 const toolTipLabel = computed(() => {
-  if (props.mode === 'dark') return 'Toggle Light Mode!'
-  else if (props.mode === 'light') return 'Toggle Dark Mode!'
-  else if (props.mode === 'no-preference') return 'Toggle Reduce Mode!'
-  else if (props.mode === 'reduce') return 'Toggle No-Preference Mode!'
-  else return ''
-})
+  if (props.mode === "dark") return "Toggle Light Mode!";
+  else if (props.mode === "light") return "Toggle Dark Mode!";
+  else if (props.mode === "no-preference") return "Toggle Reduce Mode!";
+  else if (props.mode === "reduce") return "Toggle No-Preference Mode!";
+  else if (props.mode === "incomplete") return "Toggle Complete Mode!";
+  else if (props.mode === "complete") return "Toggle Incomplete Mode!";
+  else return "";
+});
 
 const SwitchClasses = computed(() => {
   return {
-    dark: props.mode === 'dark' || props.mode === 'no-preference',
-    light: props.mode === 'light' || props.mode === 'reduce',
-  }
-})
+    dark: props.mode === "dark" || props.mode === "no-preference" || props.mode === "complete",
+    light: props.mode === "light" || props.mode === "reduce" || props.mode === "incomplete",
+  };
+});
 
 const switchInnerClasses = computed(() => {
-  return { unchecked: !toggled.value, checked: toggled.value }
-})
+  return { unchecked: !toggled.value, checked: toggled.value };
+});
 
-const a11yDescribeBy = computed(() => (props.description ? switchDescId : null))
+const a11yDescribeBy = computed(() => (props.description ? switchDescId : null));
 </script>
 
 <style lang="css" scoped>
-@import '../assets/css/main.css';
+@import "../assets/css/main.css";
 .switch,
-button[role='switch'] {
+button[role="switch"] {
   width: 4.8rem;
   height: 3rem;
   display: inline-block;
@@ -118,36 +122,36 @@ button[role='switch'] {
 }
 
 .switch.dark:hover,
-button[role='switch'].dark:hover,
+button[role="switch"].dark:hover,
 .switch.dark:active,
-button[role='switch'].dark:active {
+button[role="switch"].dark:active {
   background: #330867;
   @apply text-light;
 }
 
 .switch.light:hover,
-button[role='switch'].light:hover,
+button[role="switch"].light:hover,
 .switch.light:active,
-button[role='switch'].light:active {
+button[role="switch"].light:active {
   background: #ffff8e;
   @apply text-dark;
 }
 
 .switch:focus,
-button[role='switch']:focus {
+button[role="switch"]:focus {
   outline: 0;
 }
 
 .switch.dark:active,
-button[role='switch'].dark:active,
+button[role="switch"].dark:active,
 .switch.dark:focus,
-button[role='switch'].dark:focus {
+button[role="switch"].dark:focus {
   border: 3px dashed #ffff8e;
 }
 
 .switch.light:active,
-button[role='switch'].light:active .switch.light:focus,
-button[role='switch'].light:focus {
+button[role="switch"].light:active .switch.light:focus,
+button[role="switch"].light:focus {
   border: 3px dashed #330867;
 }
 
@@ -158,11 +162,11 @@ button[role='switch'].light:focus {
   border-radius: 50%;
   padding: 0.25rem;
   transition: transform 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
-  @apply border-2 border-solid border-light;
+  @apply border-light border-2 border-solid;
 }
 
 .switch-inner:hover {
-  @apply border-2 border-solid border-light;
+  @apply border-light border-2 border-solid;
 }
 
 .switch-inner.unchecked {
@@ -178,12 +182,12 @@ button[role='switch'].light:focus {
 }
 
 .switch.dark,
-button[role='switch'].dark {
+button[role="switch"].dark {
   background: #330867;
   @apply text-light;
 }
 .switch.light,
-button[role='switch'].light {
+button[role="switch"].light {
   background: #ffff8e;
   @apply text-dark;
 }

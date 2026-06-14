@@ -41,6 +41,7 @@ const buttonClasses = computed(() => {
     btn: variant === "btn",
     "btn-submit submit-transition": variant === "btn-submit",
     "btn-submit edit submit-transition": variant === "btn-submit edit",
+    "btn-submit cancel submit-transition": variant === "btn-submit cancel",
     "btn more": variant === "btn-more",
     "btn no-mg": variant === "btn-no-mg",
     "btn media": variant === "btn-media",
@@ -68,6 +69,10 @@ const buttonClasses = computed(() => {
 
 .btn-submit.edit {
   @apply text-light hover:bg-light bg-[#314F59] hover:text-[#314F59] active:border-[#314F59];
+}
+
+.btn-submit.cancel {
+  @apply text-light hover:bg-light bg-[#593134] hover:text-[#593134] active:border-[#593134];
 }
 
 .submit-transition {

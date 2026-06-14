@@ -1,5 +1,39 @@
 <template>
+  <VDropdown
+    v-if="node === 'float'"
+    :distance="6"
+    v-model:shown="isToggled"
+    class="block h-auto w-auto overflow-scroll"
+    tabindex="0"
+  >
+    <button
+      type="button"
+      class="dropdown-toggle focus-visible:border-gold active:bg-light relative m-2 inline-block h-auto w-auto cursor-pointer align-text-bottom hover:font-extrabold hover:text-[#FFA3D1] hover:uppercase focus:outline-0 focus:outline-none focus-visible:rounded-xl focus-visible:border-[3px] focus-visible:outline-0 active:p-2 active:text-[#173282]"
+      :tabindex="dropdownBtnTabIndex"
+      :id="dropDownBtnId"
+      :aria-expanded="dropdownExpanded"
+      aria-haspopup="true"
+      :aria-controls="isToggled ? dropDownMenuId : ''"
+    >
+      <slot name="icon"> </slot>
+      <span :class="{ 'not-sr-only lg:not-sr-only': showLabel }" class="dropdown-text sr-only">{{
+        label
+      }}</span>
+      <font-awesome-icon :icon="arrowIcon" :class="arrowIconClass" />
+    </button>
+    <template #popper>
+      <div
+        role="menu"
+        class="dropdown-menu m-0 rounded bg-gray-400 p-3 tracking-normal"
+        :id="dropDownMenuId"
+        :aria-labelledby="dropDownBtnId"
+      >
+        <slot />
+      </div>
+    </template>
+  </VDropdown>
   <div
+    v-else
     @keydown.esc="handleCloseDropDown"
     class="block h-auto w-auto overflow-scroll"
     tabindex="0"
@@ -15,7 +49,7 @@
       class="dropdown-toggle focus-visible:border-gold relative m-2 inline-block h-auto w-auto cursor-pointer align-text-bottom focus:outline-0 focus:outline-none focus-visible:rounded-xl focus-visible:border-[3px] focus-visible:outline-0"
       :aria-expanded="dropdownExpanded"
       aria-haspopup="true"
-      :aria-controls="toggle ? dropDownMenuId : ''"
+      :aria-controls="isToggled ? dropDownMenuId : ''"
     >
       <slot name="icon"> </slot>
       <span :class="{ 'not-sr-only lg:not-sr-only': showLabel }" class="dropdown-text sr-only">{{
@@ -33,13 +67,13 @@
       class="dropdown-toggle focus-visible:border-gold relative m-2 inline-block h-auto w-auto align-text-bottom focus:outline-0 focus:outline-none focus-visible:rounded-xl focus-visible:border-[3px] focus-visible:outline-0"
       :aria-expanded="dropdownExpanded"
       aria-haspopup="true"
-      :aria-controls="toggle ? dropDownMenuId : ''"
+      :aria-controls="isToggled ? dropDownMenuId : ''"
     >
       <slot name="icon"> </slot> <span class="sr-only">{{ label }}</span>
       <font-awesome-icon :icon="arrowIcon" :class="arrowIconClass" />
     </a>
     <router-link
-      v-else
+      v-else-if="node === 'router-link'"
       to="#"
       @click="handleToggleDropDown"
       @keydown.space="handleToggleDropDown"
@@ -48,16 +82,16 @@
       class="dropdown-toggle focus-visible:border-gold relative m-2 inline-block h-auto w-auto align-text-bottom focus:outline-0 focus:outline-none focus-visible:rounded-xl focus-visible:border-[3px] focus-visible:outline-0"
       :aria-expanded="dropdownExpanded"
       aria-haspopup="true"
-      :aria-controls="toggle ? dropDownMenuId : ''"
+      :aria-controls="isToggled ? dropDownMenuId : ''"
     >
       <slot name="icon"> </slot> <span class="sr-only">{{ label }}</span>
       <font-awesome-icon :icon="arrowIcon" :class="arrowIconClass" />
     </router-link>
     <div
-      v-if="toggle && links.length === 0"
+      v-if="isDropDownMenuWithContent"
       :class="dropDownMenuClasses"
       role="menu"
-      class="dropdown-menu bg-light m-0 rounded p-3 tracking-normal before:absolute before:z-201 before:block before:max-h-0 before:w-auto before:overflow-scroll before:opacity-0 before:content-none"
+      class="dropdown-menu m-0 rounded bg-gray-400 p-3 tracking-normal before:absolute before:z-201 before:block before:max-h-0 before:w-auto before:overflow-scroll before:opacity-0 before:content-none"
       :id="dropDownMenuId"
       :aria-labelledby="dropDownBtnId"
     >
@@ -67,7 +101,7 @@
       v-if="isDropDownMenuWithList"
       :class="dropDownMenuClasses"
       role="menu"
-      class="dropdown-menu m-0 rounded bg-[#e5d5d3] p-4 text-center tracking-normal before:absolute before:z-201 before:block before:max-h-0 before:w-auto before:overflow-scroll before:opacity-0 before:content-none"
+      class="dropdown-menu m-0 rounded bg-gray-400 p-4 text-center tracking-normal before:absolute before:z-201 before:block before:max-h-0 before:w-auto before:overflow-scroll before:opacity-0 before:content-none"
       :id="dropDownMenuId"
       :aria-labelledby="dropDownBtnId"
     >
@@ -111,7 +145,7 @@ const props = defineProps({
     required: false,
     default: "button",
     validator(value: string) {
-      return ["button", "a", "router-link"].includes(value);
+      return ["button", "a", "router-link", "float"].includes(value);
     },
   },
   label: {
@@ -121,9 +155,9 @@ const props = defineProps({
   variant: {
     type: String,
     required: false,
-    default: "down",
+    default: "",
     validator(value: string) {
-      return ["down", "up"].includes(value);
+      return ["down", "up", ""].includes(value);
     },
   },
   toggle: {
@@ -169,19 +203,23 @@ const handleCloseDropDown = () => {
 const stop = onClickOutside(target, handleCloseDropDown);
 
 const dropdownExpanded = computed(() => {
-  return props.toggle ? true : false;
+  return isToggled.value ? true : false;
 });
 
 const dropdownBtnTabIndex = computed(() => {
-  return props.toggle ? 0 : -1;
+  return isToggled.value ? 0 : -1;
 });
 
 const arrowIcon = computed(() => {
-  return props.toggle ? "fa-solid fa-caret-up" : "fa-solid fa-caret-down";
+  return isToggled.value ? "fa-solid fa-caret-up" : "fa-solid fa-caret-down";
 });
 
 const isDropDownMenuWithList = computed(() => {
   return props.toggle && props.links.length > 0;
+});
+
+const isDropDownMenuWithContent = computed(() => {
+  return props.toggle && props.links.length === 0;
 });
 
 const dropDownMenuClasses = computed(() => {
