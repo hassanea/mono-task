@@ -8,7 +8,7 @@
   >
     <button
       type="button"
-      class="dropdown-toggle focus-visible:border-gold active:bg-light relative m-2 inline-block h-auto w-auto cursor-pointer align-text-bottom hover:font-extrabold hover:text-[#FFA3D1] hover:uppercase focus:outline-0 focus:outline-none focus-visible:rounded-xl focus-visible:border-[3px] focus-visible:outline-0 active:p-2 active:text-[#173282]"
+      class="dropdown-toggle focus-visible:border-gold active:bg-light active:text-secondary relative m-2 inline-block h-auto w-auto cursor-pointer align-text-bottom hover:font-extrabold hover:text-[#FFA3D1] hover:uppercase focus:outline-0 focus:outline-none focus-visible:rounded-xl focus-visible:border-[3px] focus-visible:outline-0 active:p-2"
       :tabindex="dropdownBtnTabIndex"
       :id="dropDownBtnId"
       :aria-expanded="dropdownExpanded"

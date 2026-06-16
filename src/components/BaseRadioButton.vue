@@ -1,9 +1,9 @@
 <template>
   <fieldset
-    class="mt-3 mb-5 h-auto w-full rounded-md border-2 border-solid border-[#626262] p-4 dark:border-[#494949]"
+    class="border-form-border-light dark:border-form-border-dark mt-3 mb-5 h-auto w-full rounded-md border-2 border-solid p-4"
   >
     <legend
-      class="rounded-md border-2 border-solid border-[#626262] p-1 text-center text-base font-bold dark:border-[#494949]"
+      class="border-form-border-light dark:border-form-border-dark rounded-md border-2 border-solid p-1 text-center text-base font-bold"
     >
       {{ legend }}
     </legend>
@@ -15,7 +15,7 @@
           :name="`radio-${radioButtonId}`"
           :value="choice"
           v-model="model"
-          class="radio-button-transition relative top-1 mb-1 h-7 w-7 appearance-none rounded-full border-2 border-solid border-black accent-[#ffd700] checked:border-9 checked:border-[#173282] focus:outline-2 focus:outline-[#ffd700] focus:outline-solid md:mb-0"
+          class="radio-button-transition accent-highlight checked:border-secondary focus:outline-highlight relative top-1 mb-1 h-7 w-7 appearance-none rounded-full border-2 border-solid border-black checked:border-9 focus:outline-2 focus:outline-solid md:mb-0"
         />
         <base-input-label :id="radioButtonId" variant="radio">
           {{ choice }}

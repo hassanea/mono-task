@@ -1,11 +1,7 @@
 <template>
   <li
-    class="task-item flex h-auto list-none flex-col flex-nowrap items-center justify-center rounded-[20px] border border-solid border-[#7f1734] drop-shadow-md drop-shadow-gray-500"
-    :class="{
-      'flex-[100%] lg:flex-[48%]': count % 2 === 0,
-      'flex-[100%] lg:flex-1/4': count % 4 === 0,
-      'flex-[100%] lg:flex-[32%]': count % 3 === 0,
-    }"
+    class="task-item border-primary-dark flex h-auto list-none flex-col flex-nowrap items-center justify-center rounded-[20px] border border-solid drop-shadow-md drop-shadow-gray-500 odd:bg-[#a3a3a3] even:bg-[#d9d1d9]"
+    :class="taskItemGridClasses"
   >
     <base-article class="p-6.5 md:p-7.5 lg:p-8">
       <h3
@@ -19,7 +15,7 @@
       >
         {{ task.description }}
       </p>
-      <div class="-mt-0.5 flex flex-row flex-nowrap items-center justify-center gap-2 md:mt-2">
+      <div class="-mt-0.5 flex flex-row flex-nowrap items-center justify-center gap-2 md:mt-1">
         <base-button
           type="button"
           label="Delete Task"
@@ -91,6 +87,14 @@ const taskCompletedClass = computed(() => {
   return { "line-through": props.task.completed };
 });
 
+const taskItemGridClasses = computed(() => {
+  return {
+    "flex-[100%] lg:flex-[48%]": props?.count % 2 === 0,
+    "flex-[100%] lg:flex-1/4": props?.count % 4 === 0,
+    "flex-[100%] lg:flex-[32%]": props?.count % 3 === 0,
+  };
+});
+
 const completeTaskBtnLabel = computed(() =>
   props.task.completed ? "Completed Task" : "Incomplete Task",
 );
@@ -101,30 +105,4 @@ const completeTaskIconBtn = computed(() =>
 );
 </script>
 
-<style lang="css" scoped>
-.goal-item {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  /* width: 31.25rem; */
-  height: auto;
-  list-style: none;
-  padding: 2rem;
-  margin: 0.75rem 0;
-  border-radius: 20px;
-}
-
-.goal-title + button {
-  margin-left: 0.25rem;
-}
-
-.task-item:nth-child(odd) {
-  background: #a3a3a3;
-}
-
-.task-item:nth-child(even) {
-  background: #d9d1d9;
-}
-</style>
+<style lang="css" scoped></style>

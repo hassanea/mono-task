@@ -2,7 +2,7 @@
   <!-- Create -->
   <form
     v-if="variant === 'create'"
-    class="goal-form dark:bg-form-dark/50 bg-form-light/50 focus-within:border focus-within:border-solid focus-within:border-[#ffd700] focus-within:outline-0"
+    class="goal-form dark:bg-form-dark/50 bg-form-light/50 focus-within:border-highlight focus-within:border focus-within:border-solid focus-within:outline-0"
     @submit.prevent="addTask"
   >
     <slot>
@@ -153,7 +153,7 @@
   <!-- Update -->
   <form
     v-if="variant === 'update' && Object.values(props.currentGoal).length > 0"
-    class="goal-form dark:bg-form-dark/50 bg-form-light/50 focus-within:border focus-within:border-solid focus-within:border-[#ffd700] focus-within:outline-0"
+    class="goal-form dark:bg-form-dark/50 bg-form-light/50 focus-within:border-highlight focus-within:border focus-within:border-solid focus-within:outline-0"
     @submit.prevent="updateTask"
   >
     <slot>

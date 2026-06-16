@@ -1,7 +1,7 @@
 <template>
   <error-layout>
     <base-section
-      class="border-dark mx-auto h-auto w-full max-w-125 rounded-lg border-[3px] border-solid bg-[#e8f3ff] p-8 text-center shadow-2xl"
+      class="border-dark bg-error mx-auto h-auto w-full max-w-125 rounded-lg border-[3px] border-solid p-8 text-center shadow-2xl"
     >
       <template #default>
         <div class="flex flex-col items-center justify-center">

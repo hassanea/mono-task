@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="text-light navbar-transition fixed inset-0 z-100 flex w-full flex-col flex-wrap items-center rounded-xs bg-[#173282]/90 px-3 py-4 align-middle md:h-25 md:flex-row md:px-8 md:py-3"
+    class="text-light navbar-transition bg-secondary fixed inset-0 z-100 flex w-full flex-col flex-wrap items-center rounded-xs px-3 py-4 align-middle md:h-25 md:flex-row md:px-8 md:py-3"
     :class="navbarClasses"
     :aria-label="label"
     @keydown.esc="closeMobileNavigation"
@@ -28,66 +28,11 @@
       <li v-for="{ path, meta } in links" :key="meta?.name" ref="regLinks">
         <router-link
           :to="path"
-          class="font-sans2 active:bg-light border-[#97EDAA] text-base leading-normal font-bold tracking-normal not-italic hover:font-extrabold hover:text-[#FFA3D1] hover:uppercase focus:border-t-2 focus:border-r-0 focus:border-b-2 focus:border-l-0 focus:py-2 focus:outline-0 active:p-2 active:text-[#173282]"
+          class="font-sans2 active:bg-light active:text-secondary border-[#97EDAA] text-base leading-normal font-bold tracking-normal not-italic hover:font-extrabold hover:text-[#FFA3D1] hover:uppercase focus:border-t-2 focus:border-r-0 focus:border-b-2 focus:border-l-0 focus:py-2 focus:outline-0 active:p-2"
           >{{ meta.name }}</router-link
         >
       </li>
       <!--             :tabindex="!toggle && !showMobileMenu ? null : -1" -->
-
-      <!-- <li class="list-none">
-        <base-drop-down-menu
-          variant="down"
-          :toggle="changed"
-          @handle-toggle="handleDropDownChange"
-          @handle-close="handleDropDownClose"
-          label="Website Settings"
-          v-tooltip="'Settings'"
-          arrow-icon-class="text-light"
-          class="nav-link-effects"
-          ref="dropDown"
-        >
-          <template #icon>
-            <span class="dropdown-text sr-only md:not-sr-only"> Settings </span>
-            <span class="ml-0 inline-block align-middle lg:ml-2">
-              <font-awesome-icon icon="fa-solid fa-gear" class="text-light" />
-            </span>
-          </template>
-
-          <template #default>
-            <div
-              role="group"
-              aria-label="User Website Preferences"
-              class="grid h-auto w-full grid-cols-1 gap-2.5"
-            >
-              <base-button
-                variant="btn"
-                @click="removeLocalStorageData"
-                @keydown.enter="removeLocalStorageData"
-                label="Clear LocalStorage Data"
-                v-tooltip.left="'Clear LocalStorage Data'"
-                class="mx-auto"
-              >
-                <template #icon>
-                  <font-awesome-icon icon="fa-solid fa-eraser" />
-                </template>
-              </base-button>
-
-              <base-switch
-                :mode="colorMode"
-                :model-value="isDarkMode"
-                :label="setColorSwitchLabel"
-                description="Set preferred color scheme on website."
-                @update:model-value="handleColorThemeChange"
-              >
-                <template #icon>
-                  <font-awesome-icon :icon="setColorSwitchIcon" />
-                </template>
-              </base-switch>
-            </div>
-          </template>
-        </base-drop-down-menu>
-      </li> -->
-
       <li class="list-none">
         <base-drop-down-menu
           :toggle="changed"
@@ -256,11 +201,11 @@ onUnmounted(() => stop());
 @import "../assets/css/main.css";
 
 .router-link-active {
-  @apply text-[#ffd700];
+  @apply text-highlight;
 }
 
 .router-link-active {
-  @apply bg-[#173282] text-[#ffd700];
+  @apply bg-secondary text-highlight;
 }
 
 .router-link-exact-active {
@@ -274,7 +219,7 @@ onUnmounted(() => stop());
 }
 
 .nav-link-effects {
-  @apply mt-1.5 hover:font-extrabold hover:text-[#FFA3D1] hover:uppercase focus:border-t-2 focus:border-r-0 focus:border-b-2 focus:border-l-0 focus:py-2 focus:outline-0 active:p-2 active:text-[#173282];
+  @apply active:text-secondary mt-1.5 hover:font-extrabold hover:text-[#FFA3D1] hover:uppercase focus:border-t-2 focus:border-r-0 focus:border-b-2 focus:border-l-0 focus:py-2 focus:outline-0 active:p-2;
   /* hover:border-b-4 hover:border-solid hover:border-b-[#ff0] hover:font-extrabold hover:text-[#eae6e5] focus:outline focus:outline-2 focus:outline-[#b3ffff] focus:outline-none active:border-0 active:text-[#ff0]; */
 }
 

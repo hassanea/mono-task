@@ -55,16 +55,17 @@ const buttonClasses = computed(() => {
 });
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 @import "../assets/css/main.css";
+
 .btn {
-  @apply font-sans2 hover:bg-light h-13 w-13 cursor-pointer rounded-full p-3 text-base leading-normal font-extrabold text-[#173282] uppercase not-italic hover:text-[#173282] focus:border-[3px] focus:border-[#ffd700] focus:outline-none active:drop-shadow-xl active:drop-shadow-[#173282];
+  @apply font-sans2 hover:bg-light text-secondary hover:text-secondary focus:border-highlight active:drop-shadow-secondary h-13 w-13 cursor-pointer rounded-full p-3 text-base leading-normal font-extrabold uppercase not-italic focus:border-[3px] focus:outline-none active:drop-shadow-xl;
   -webkit-transition: all 0.6s cubic-bezier(1, -0.62, 0, -0.2);
   transition: all 0.6s cubic-bezier(1, -0.62, 0, -0.2);
 }
 
 .btn-submit {
-  @apply text-light hover:bg-light font-sans2 dark:hover:text-form-dark hover:text-form-light inline-block h-auto w-full cursor-pointer rounded-2xl bg-[#343159] p-3 px-4 text-center text-base leading-normal font-bold tracking-normal not-italic transition-all duration-150 focus:shadow-md focus:shadow-[#ffd700] focus:outline-0 active:border-4 active:border-solid active:border-[#343159] md:w-11/12 md:text-lg;
+  @apply text-light hover:bg-light font-sans2 dark:hover:text-form-dark hover:text-form-light focus:shadow-highlight inline-block h-auto w-full cursor-pointer rounded-2xl bg-[#343159] p-3 px-4 text-center text-base leading-normal font-bold tracking-normal not-italic transition-all duration-150 focus:shadow-md focus:outline-0 active:border-4 active:border-solid active:border-[#343159] md:w-11/12 md:text-lg;
 }
 
 .btn-submit.edit {
@@ -104,7 +105,7 @@ const buttonClasses = computed(() => {
 }
 
 .btn-mobile-nav:hover {
-  @apply bg-dark text-primary;
+  @apply bg-dark text-light;
 }
 
 .btn-mobile-nav:active {
@@ -115,7 +116,7 @@ const buttonClasses = computed(() => {
 .btn-mobile-nav:focus {
   outline: 0;
   background: #b3ffff;
-  @apply text-primary;
+  @apply text-dark;
 }
 
 /* height: auto;
@@ -170,10 +171,7 @@ const buttonClasses = computed(() => {
     outline: 0;
     border: 3.5px double #23ce6b;
   } */
-</style>
 
-<style lang="css" scoped>
-@import "../assets/css/main.css";
 /* .btn-cta {
 @apply fixed right-[1%] bottom-[1%] z-999 mx-auto my-0 inline-block h-14 w-40 cursor-pointer  rounded-[30px] border-0 bg-tertiary px-3 py-4 align-middle font-bold hover:bg-[#a7c3db] focus:bg-[#a7c3db];
 

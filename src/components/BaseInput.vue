@@ -12,7 +12,7 @@
       :placeholder
       :id="inputLabelID"
       :aria-label="setA11yLabel"
-      class="mx-0 mt-3 mb-5 block h-16 w-full max-w-150 min-w-62.5 rounded-[5px] border-2 border-solid border-[#626262] p-4 text-base caret-[#07ff22] placeholder:pl-[0.8rem] placeholder:font-bold placeholder:text-[#aaa] focus:border-2 focus:border-solid focus:border-[#ffd700] focus:outline-0 md:text-[1.0625rem] dark:border-[#494949]"
+      class="border-form-border-light focus:border-highlight dark:border-form-border-dark mx-0 mt-3 mb-5 block h-16 w-full max-w-150 min-w-62.5 rounded-[5px] border-2 border-solid p-4 text-base caret-[#07ff22] placeholder:pl-[0.8rem] placeholder:font-bold placeholder:text-[#aaa] focus:border-2 focus:border-solid focus:outline-0 md:text-[1.0625rem]"
     />
   </base-form-control>
 
@@ -29,7 +29,7 @@
       :placeholder
       :id="inputLabelID"
       :aria-label="setA11yLabel"
-      class="mx-0 mt-3 mb-5 block h-16 w-full max-w-150 min-w-62.5 rounded-[5px] border-2 border-solid border-[#626262] p-4 text-base caret-[#07ff22] placeholder:pl-[0.8rem] placeholder:font-bold placeholder:text-[#aaa] focus:border-2 focus:border-solid focus:border-[#ffd700] focus:outline-0 md:text-[1.0625rem] dark:border-[#494949]"
+      class="border-form-border-light focus:border-highlight dark:border-form-border-dark mx-0 mt-3 mb-5 block h-16 w-full max-w-150 min-w-62.5 rounded-[5px] border-2 border-solid p-4 text-base caret-[#07ff22] placeholder:pl-[0.8rem] placeholder:font-bold placeholder:text-[#aaa] focus:border-2 focus:border-solid focus:outline-0 md:text-[1.0625rem]"
     />
   </base-form-control>
 
@@ -47,7 +47,7 @@
       cols="70"
       :id="inputLabelID"
       :aria-label="setA11yLabel"
-      class="mx-0 mt-3 mb-5 block h-16 w-full max-w-150 min-w-62.5 rounded-[5px] border-2 border-solid border-[#626262] p-4 text-base caret-[#07ff22] placeholder:pl-[0.8rem] placeholder:font-bold placeholder:text-[#aaa] focus:border-2 focus:border-solid focus:border-[#ffd700] focus:outline-0 md:text-[1.0625rem] dark:border-[#494949]"
+      class="border-form-border-light focus:border-highlight dark:border-form-border-dark mx-0 mt-3 mb-5 block h-16 w-full max-w-150 min-w-62.5 rounded-[5px] border-2 border-solid p-4 text-base caret-[#07ff22] placeholder:pl-[0.8rem] placeholder:font-bold placeholder:text-[#aaa] focus:border-2 focus:border-solid focus:outline-0 md:text-[1.0625rem]"
     ></textarea>
   </base-form-control>
 </template>

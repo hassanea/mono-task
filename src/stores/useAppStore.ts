@@ -1,15 +1,16 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
-import { ref } from "vue";
+import { ref, computed, watch } from "vue";
 import { v4 as uuidv4 } from "uuid";
 export const useAppStore = defineStore("useAppStore", () => {
   const tasks = ref([]);
+  const taskFilter = ref("");
   const currentYear = ref(0);
   const hasError = ref(false);
   const update = ref(false);
   const updatedTask = ref({});
 
   function createTask(data: object) {
-    const goal = {
+    const task = {
       id: uuidv4(),
       name: data.name,
       description: data.description || "lorem ipsum dolor amorcit.",
@@ -17,13 +18,14 @@ export const useAppStore = defineStore("useAppStore", () => {
       updateDate: null,
       completed: false,
       duration: data.duration,
+      priority: data.priority,
     };
 
     if (data.name === "") {
       hasError.value = true;
       return;
     } else {
-      tasks.value.push(goal);
+      tasks.value.push(task);
     }
   }
 
@@ -34,8 +36,8 @@ export const useAppStore = defineStore("useAppStore", () => {
 
   function updateTask(taskId: string) {
     update.value = true;
-    const currentGoal = tasks.value.find((task) => task.id === taskId);
-    updatedTask.value = currentGoal;
+    const currentTask = tasks.value.find((task) => task.id === taskId);
+    updatedTask.value = currentTask;
   }
 
   function handleUpdateTask(data: object) {
@@ -47,19 +49,51 @@ export const useAppStore = defineStore("useAppStore", () => {
     update.value = false;
   }
 
+  function handleCancelTaskUpdate() {
+    update.value = false;
+  }
+
   function completeTask(taskId: string) {
     updatedTask.value = tasks.value.find((task) => task.id === taskId);
     updatedTask.value.completed = !updatedTask.value.completed;
   }
 
+  const searchTasks = computed(() => {
+    if (taskFilter.value) {
+      return [...tasks.value].filter((task) => {
+        return task.name.toLowerCase().includes(taskFilter.value.toLowerCase());
+        // task.name.toLowerCase() === taskFilter.value.toLowerCase();
+      });
+    } else {
+      return tasks.value;
+    }
+  });
+
+  const cleanUpTasks = watch(
+    tasks,
+    () => {
+      const data = JSON.stringify(tasks.value);
+      localStorage.setItem("tasks", data);
+    },
+    {
+      deep: true,
+    },
+  );
+
   return {
     tasks,
+    taskFilter,
     currentYear,
+    update,
+    updatedTask,
     createTask,
     deleteTask,
     updateTask,
     handleUpdateTask,
+    handleCancelTaskUpdate,
     completeTask,
+    searchTasks,
+    cleanUpTasks,
   };
 });
 

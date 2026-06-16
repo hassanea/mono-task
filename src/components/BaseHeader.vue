@@ -1,5 +1,5 @@
 <template>
-  <header class="text-light h-auto w-full bg-[#BF4f51] dark:bg-[#7f1734]">
+  <header class="text-light bg-primary-light dark:bg-primary-dark h-auto w-full">
     <base-navbar
       :toggle
       :links="routes"
