@@ -1,12 +1,11 @@
 <template>
   <nav
-    class="text-light navbar-transition bg-secondary fixed inset-0 z-100 flex w-full flex-col flex-wrap items-center rounded-xs px-3 py-4 align-middle md:h-25 md:flex-row md:px-8 md:py-3"
+    class="text-light navbar-transition md:bg-secondary/95 bg-secondary/80 font-sans2 fixed inset-0 z-100 flex w-full flex-col flex-wrap items-center justify-center rounded-xs px-3 py-4 align-middle text-lg leading-normal font-bold md:h-25 md:flex-row md:px-6 md:py-3 lg:justify-start lg:px-8"
     :class="navbarClasses"
     :aria-label="label"
     @keydown.esc="closeMobileNavigation"
     ref="navEl"
   >
-    <!-- class="w-full md:p-2.5 p-6 bg-primary/95 text-dark flex flex-col md:flex-row flex-wrap justify-center lg:justify-start items-center fixed shadow-2xl font-sans leading-normal text-lg font-bold z-2000 lg:py-[.6rem] lg:px-0 align-middle inset-0 border-t-2 border-solid border-t-dark" -->
     <base-button
       v-if="showMobileMenu"
       variant="btn-mobile-nav"
@@ -21,14 +20,18 @@
     </base-button>
     <ul
       :id="navId"
-      class="navbar-transition flex list-none flex-col flex-wrap items-center justify-center gap-6 align-middle md:static md:h-auto md:translate-0 md:flex-row md:gap-4"
+      class="navbar-transition flex list-none flex-col flex-wrap items-center justify-center gap-5 align-middle md:static md:h-auto md:translate-0 md:flex-row md:gap-4"
       :class="navbarNavClasses"
     >
-      <!-- "flex flex-col md:flex-row justify-center items-center flex-wrap md:static md:translate-0 mx-0 md:mx-4 lg:mx-5 xl:mx-6 list-none transition-transform navbar-transition -->
-      <li v-for="{ path, meta } in links" :key="meta?.name" ref="regLinks">
+      <!--   .nav-link {
+    margin: 0 0.625rem;
+    @apply font-sans2 text-lg leading-normal font-bold text-light uppercase dark:contrast-[0.8];
+  } -->
+
+      <li v-for="{ path, meta } in links" :key="meta?.name">
         <router-link
           :to="path"
-          class="font-sans2 active:bg-light active:text-secondary border-[#97EDAA] text-base leading-normal font-bold tracking-normal not-italic hover:font-extrabold hover:text-[#FFA3D1] hover:uppercase focus:border-t-2 focus:border-r-0 focus:border-b-2 focus:border-l-0 focus:py-2 focus:outline-0 active:p-2"
+          class="font-sans2 active:bg-light active:text-secondary inline-block cursor-pointer border-[#97EDAA] p-1 text-base leading-normal font-bold tracking-normal not-italic no-underline hover:font-extrabold hover:text-[#FFA3D1] hover:uppercase focus:border-t-2 focus:border-r-0 focus:border-b-2 focus:border-l-0 focus:py-2 focus:outline-0 active:p-2 md:p-2"
           >{{ meta.name }}</router-link
         >
       </li>
@@ -41,7 +44,6 @@
           v-tooltip="'Settings'"
           arrow-icon-class="text-light"
           class="nav-link-effects"
-          ref="dropDown"
         >
           <template #icon>
             <span class="dropdown-text sr-only md:not-sr-only"> Settings </span>
@@ -111,12 +113,13 @@ const { colorMode, isDarkMode, setColorSwitchIcon, setColorSwitchLabel } = store
 
 const { handleColorThemeChange } = colorStore;
 
-// const { initFocusTrap, clearFocusTrap } = useFocusTrap();
+// const { trapRef, initFocusTrap, clearFocusTrap } = useFocusTrap();
 
 const props = defineProps({
   toggle: {
     type: Boolean,
     required: false,
+    default: false,
   },
   links: {
     type: Array,
@@ -219,7 +222,7 @@ onUnmounted(() => stop());
 }
 
 .nav-link-effects {
-  @apply active:text-secondary mt-1.5 hover:font-extrabold hover:text-[#FFA3D1] hover:uppercase focus:border-t-2 focus:border-r-0 focus:border-b-2 focus:border-l-0 focus:py-2 focus:outline-0 active:p-2;
+  @apply active:text-secondary mt-1.5 bg-transparent hover:font-extrabold hover:text-[#FFA3D1] hover:uppercase focus:border-t-2 focus:border-r-0 focus:border-b-2 focus:border-l-0 focus:py-2 focus:outline-0 active:p-2;
   /* hover:border-b-4 hover:border-solid hover:border-b-[#ff0] hover:font-extrabold hover:text-[#eae6e5] focus:outline focus:outline-2 focus:outline-[#b3ffff] focus:outline-none active:border-0 active:text-[#ff0]; */
 }
 

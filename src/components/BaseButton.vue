@@ -82,22 +82,6 @@ const buttonClasses = computed(() => {
 
 .btn-mobile-nav {
   @apply bg-light absolute top-[10%] right-[1%] z-125 mx-0 my-4 inline-block h-12 w-12 cursor-pointer rounded-full p-2 align-middle text-purple-800;
-  /* display: inline-block;
-  position: absolute;
-  top: 10%;
-  right: 1%;
-  z-index: 1026;
-  vertical-align: middle;
-  width: 3rem;
-  height: 3rem;
-  margin: 1rem 0;
-  padding: 0.5rem;
-  border: 2px solid #b8390e;
-  border-radius: 100%;
-  cursor: pointer;
-  -webkit-transition: all 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-  transition: all 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-  @apply bg-primary text-light; */
 }
 
 .btn-mobile-nav.active {
