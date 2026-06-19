@@ -1,9 +1,9 @@
 <template>
   <fieldset
-    class="border-form-border-light dark:border-form-border-dark mt-3 mb-5 h-auto w-full rounded-md border-2 border-solid p-4"
+    class="border-form-border-light dark:border-form-border-dark mt-2.5 mb-4 h-auto w-full rounded-md border-2 border-solid p-3 md:mt-3 md:mb-5 md:p-4"
   >
     <legend
-      class="border-form-border-light dark:border-form-border-dark rounded-md border-2 border-solid p-1 text-center text-base font-bold"
+      class="border-form-border-light dark:border-form-border-dark rounded-md border-2 border-solid p-1 text-left text-base font-bold uppercase md:text-[1.0625rem]"
     >
       {{ legend }}
     </legend>

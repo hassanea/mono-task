@@ -1,0 +1,40 @@
+    // monoTaskData.json
+    "dayDurations": [
+      "Every Sunday",
+      "Every Monday",
+      "Every Tuesday",
+      "Every Wednesday",
+      "Every Thursday",
+      "Every Friday",
+      "Every Saturday"
+    ]
+
+// BaseNavbar.vue
+// import { watch } from 'vue';
+// import { useFocusTrap } from "@/composables/useFocusTrap";
+
+// const { trapRef, initFocusTrap, clearFocusTrap } = useFocusTrap();
+
+// const regLinks = useTemplateRef("regLinks");
+
+// const dropDown = useTemplateRef("dropDown");
+// :tabindex="!toggle && !showMobileMenu ? null : -1"
+
+
+    // watch(
+//   () => props.toggle,
+//   (value) => {
+//     const elements = [...regLinks?.value, dropDown?.value];
+//     if (value) {
+//       initFocusTrap();
+//       elements.forEach((el) => {
+//         el.setAttribute("tabindex", 0);
+//       });
+//     } else {
+//       clearFocusTrap();
+//       elements.forEach((el) => {
+//         el.setAttribute("tabindex", -1);
+//       });
+//     }
+//   },
+// );

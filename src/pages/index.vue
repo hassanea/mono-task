@@ -30,14 +30,6 @@
       </div>
     </base-section>
 
-    <!-- <base-input
-      label="Search Tasks"
-      :show-label="false"
-      node="input"
-      placeholder="Search"
-      v-model.trim="taskFilter"
-    /> -->
-
     <base-section aria-labelledby="tasks-head">
       <div class="grid grid-cols-1">
         <h2
@@ -76,7 +68,6 @@ import { storeToRefs } from "pinia";
 import { definePage } from "vue-router/dist/experimental/index.js";
 import monoTaskData from "@/assets/data/monoTaskData.json";
 import BaseForm from "@/components/BaseForm.vue";
-// import BaseInput from "@/components/BaseInput.vue";
 
 const TaskList = defineAsyncComponent(async () => await import("@/components/TaskList.vue"));
 

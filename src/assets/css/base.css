@@ -24,8 +24,10 @@
     -moz-osx-font-smoothing: grayscale;
     @apply font-sans2 overflow-x-hidden text-base leading-normal font-normal not-italic;
   }
-
-  /* ::selection {
-
-} */
+  ::-moz-selection {
+    @apply bg-selection;
+  }
+  ::selection {
+    @apply bg-selection;
+  }
 }

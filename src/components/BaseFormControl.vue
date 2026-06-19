@@ -1,5 +1,5 @@
 <template>
-  <div class="goal-form-control">
+  <div class="flex h-full w-full flex-col flex-nowrap justify-center">
     <slot></slot>
   </div>
 </template>
@@ -10,16 +10,4 @@ defineOptions({
 });
 </script>
 
-<style lang="css" scoped>
-.goal-form-control {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-}
-
-.goal-form-control.goal-form-control-label {
-  justify-content: flex-start;
-}
-</style>
+<style lang="css" scoped></style>

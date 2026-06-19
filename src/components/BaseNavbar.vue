@@ -23,11 +23,6 @@
       class="navbar-transition flex list-none flex-col flex-wrap items-center justify-center gap-5 align-middle md:static md:h-auto md:translate-0 md:flex-row md:gap-4"
       :class="navbarNavClasses"
     >
-      <!--   .nav-link {
-    margin: 0 0.625rem;
-    @apply font-sans2 text-lg leading-normal font-bold text-light uppercase dark:contrast-[0.8];
-  } -->
-
       <li v-for="{ path, meta } in links" :key="meta?.name">
         <router-link
           :to="path"
@@ -35,8 +30,7 @@
           >{{ meta.name }}</router-link
         >
       </li>
-      <!--             :tabindex="!toggle && !showMobileMenu ? null : -1" -->
-      <li class="list-none">
+      <li>
         <base-drop-down-menu
           :toggle="changed"
           node="float"
@@ -86,20 +80,30 @@
           </template>
         </base-drop-down-menu>
       </li>
+
+      <li>
+        <base-input
+          label="Search Tasks"
+          :show-label="false"
+          node="search"
+          placeholder="Search"
+          v-model.trim="taskFilter"
+        />
+      </li>
     </ul>
   </nav>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, useTemplateRef, defineAsyncComponent, onUnmounted, useId } from "vue";
-// watch,
 import { storeToRefs } from "pinia";
 import { RouterLink } from "vue-router";
 import { useMediaQuery, onClickOutside } from "@vueuse/core";
-// import { useFocusTrap } from "@/composables/useFocusTrap";
+import { useAppStore } from "@/stores/useAppStore.ts";
 import { useMyColorModeStore } from "@/stores/useMyColorModeStore";
 import { removeLocalStorageData } from "@/utils";
-import BaseDropDownMenu from "./BaseDropDownMenu.vue";
+import BaseDropDownMenu from "@/components/BaseDropDownMenu.vue";
+import BaseInput from "@/components/BaseInput.vue";
 
 defineOptions({
   name: "BaseNavbar",
@@ -107,13 +111,13 @@ defineOptions({
 
 const BaseSwitch = defineAsyncComponent(() => import("@/components/BaseSwitch.vue"));
 
+const appStore = useAppStore();
 const colorStore = useMyColorModeStore();
 
+const { taskFilter } = storeToRefs(appStore);
 const { colorMode, isDarkMode, setColorSwitchIcon, setColorSwitchLabel } = storeToRefs(colorStore);
 
 const { handleColorThemeChange } = colorStore;
-
-// const { trapRef, initFocusTrap, clearFocusTrap } = useFocusTrap();
 
 const props = defineProps({
   toggle: {
@@ -142,10 +146,6 @@ const { links, label } = props;
 const changed = ref(false);
 
 const navEl = useTemplateRef("navEl");
-
-// const regLinks = useTemplateRef("regLinks");
-
-// const dropDown = useTemplateRef("dropDown");
 
 const showMobileMenu = useMediaQuery("(max-width: 767px)");
 
@@ -179,24 +179,6 @@ const setMobileIcon = computed(() => {
   return props.toggle ? "fa-solid fa-close" : "fa-solid fa-bars";
 });
 
-// watch(
-//   () => props.toggle,
-//   (value) => {
-//     const elements = [...regLinks?.value, dropDown?.value];
-//     if (value) {
-//       initFocusTrap();
-//       elements.forEach((el) => {
-//         el.setAttribute("tabindex", 0);
-//       });
-//     } else {
-//       clearFocusTrap();
-//       elements.forEach((el) => {
-//         el.setAttribute("tabindex", -1);
-//       });
-//     }
-//   },
-// );
-
 onUnmounted(() => stop());
 </script>
 
@@ -223,7 +205,6 @@ onUnmounted(() => stop());
 
 .nav-link-effects {
   @apply active:text-secondary mt-1.5 bg-transparent hover:font-extrabold hover:text-[#FFA3D1] hover:uppercase focus:border-t-2 focus:border-r-0 focus:border-b-2 focus:border-l-0 focus:py-2 focus:outline-0 active:p-2;
-  /* hover:border-b-4 hover:border-solid hover:border-b-[#ff0] hover:font-extrabold hover:text-[#eae6e5] focus:outline focus:outline-2 focus:outline-[#b3ffff] focus:outline-none active:border-0 active:text-[#ff0]; */
 }
 
 .navbar-transition {

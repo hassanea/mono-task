@@ -18,7 +18,7 @@ const props = defineProps({
     type: String,
     required: false,
     validator(value: string) {
-      return ["input", "radio"].includes(value);
+      return ["input", "radio", "select"].includes(value);
     },
   },
 });
@@ -29,6 +29,7 @@ const labelVariationClasses = computed(() => {
       props.variant === "input",
     "font-sans2 ml-0 inline-block text-center align-middle text-base leading-normal font-bold tracking-normal not-italic md:ml-1.5 md:text-[1.0625rem]":
       props.variant === "radio",
+    "mx-0 my-3 inline-block text-center font-semibold not-italic": props.variant === "select",
   };
 });
 </script>

@@ -1,28 +1,44 @@
 <template>
-  <button
-    :class="SwitchClasses"
-    :aria-checked="isChecked"
-    :aria-label="label"
-    :aria-describedby="a11yDescribeBy"
-    v-tooltip.left="`${toolTipLabel}`"
-    type="button"
-    class="switch"
-    role="switch"
-    @click="toggleSwitch"
-    @keydown.enter="toggleSwitch"
-  >
-    <span class="switch-inner" :class="switchInnerClasses">
-      <slot name="icon" />
-    </span>
-    <slot />
-    <p v-if="description" :id="switchDescId" class="sr-only">
-      {{ description }}
-    </p>
-  </button>
+  <div class="mt-2.25 mb-3.5 block h-auto w-full text-left md:mt-4 md:mb-5">
+    <span
+      v-if="showLabel && label"
+      class="font-sans2 mr-3 inline-block text-left text-base leading-normal font-bold uppercase not-italic md:text-[1.0625rem]"
+      :id="switchLabelId"
+      >{{ label }}</span
+    >
+    <button
+      :class="[switchClasses, switchAlignmentClasses]"
+      :aria-checked="isChecked"
+      :aria-label="setA11yLabel"
+      :aria-labelledby="setLabelId"
+      :aria-describedby="a11yDescribeBy"
+      v-tooltip.left="`${toolTipLabel}`"
+      type="button"
+      class="switch"
+      role="switch"
+      @click="toggleSwitch"
+      @keydown.enter="toggleSwitch"
+    >
+      <span class="switch-inner" :class="switchInnerClasses">
+        <slot name="icon" />
+      </span>
+      <slot />
+      <p v-if="description" :id="switchDescId" class="sr-only">
+        {{ description }}
+      </p>
+    </button>
+    <span
+      v-if="showLabel && label"
+      aria-hidden="true"
+      class="font-sans2 my-2 ml-2 inline-block text-center align-middle font-bold italic md:my-3 md:ml-3"
+      >{{ capitalize(mode) }}</span
+    >
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, computed, watch, useId } from "vue";
+import { capitalize } from "@/utils";
 defineOptions({
   name: "BaseSwitch",
 });
@@ -40,6 +56,19 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  align: {
+    type: String,
+    required: false,
+    default: "middle",
+    validator(value: string) {
+      return ["left", "middle"].includes(value);
+    },
+  },
+  showLabel: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
   description: {
     type: String,
     required: false,
@@ -55,6 +84,8 @@ const props = defineProps({
 const toggled = ref(props.modelValue);
 
 const switchDescId = useId();
+
+const switchLabelId = useId();
 
 const emits = defineEmits(["update:modelValue"]);
 
@@ -90,18 +121,34 @@ const toolTipLabel = computed(() => {
   else return "";
 });
 
-const SwitchClasses = computed(() => {
+const showLabel = computed(() => {
+  return props.showLabel && props.label;
+});
+
+const setA11yLabel = computed(() => {
+  return showLabel.value ? undefined : props.label;
+});
+
+const setLabelId = computed(() => {
+  return showLabel.value ? switchLabelId : undefined;
+});
+
+const switchClasses = computed(() => {
   return {
     dark: props.mode === "dark" || props.mode === "no-preference" || props.mode === "complete",
     light: props.mode === "light" || props.mode === "reduce" || props.mode === "incomplete",
   };
 });
 
+const switchAlignmentClasses = computed(() => {
+  return { "my-0 mx-auto": props.align === "middle", "my-0 mx-0": props.align === "left" };
+});
+
 const switchInnerClasses = computed(() => {
   return { unchecked: !toggled.value, checked: toggled.value };
 });
 
-const a11yDescribeBy = computed(() => (props.description ? switchDescId : null));
+const a11yDescribeBy = computed(() => (props.description ? switchDescId : undefined));
 </script>
 
 <style lang="css" scoped>
@@ -116,7 +163,6 @@ button[role="switch"] {
   border-radius: 75px;
   padding: 0.625rem;
   border: 0;
-  margin: 0 auto;
   cursor: pointer;
   @apply text-light;
 }
