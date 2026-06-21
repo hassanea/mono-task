@@ -42,15 +42,7 @@ const buttonClasses = computed(() => {
     "btn-submit submit-transition": variant === "btn-submit",
     "btn-submit edit submit-transition": variant === "btn-submit edit",
     "btn-submit cancel submit-transition": variant === "btn-submit cancel",
-    "btn more": variant === "btn-more",
-    "btn no-mg": variant === "btn-no-mg",
-    "btn media": variant === "btn-media",
-    "btn-cta": variant === "btn-cta",
-    "btn-close": variant === "btn-close",
-    "btn btn-back": variant === "btn-back",
     "btn-mobile-nav": variant === "btn-mobile-nav",
-    "btn-lightbox": variant === "btn-lightbox",
-    "btn-toolbar": variant === "btn-toolbar",
   };
 });
 </script>
