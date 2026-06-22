@@ -93,14 +93,6 @@ const toggleSwitch = () => {
   toggled.value = !toggled.value;
 };
 
-watch(
-  () => props.modelValue,
-  (value) => {
-    toggled.value = value;
-  },
-  { immediate: true },
-);
-
 watch(toggled, (value) => {
   emits("update:modelValue", value);
 });

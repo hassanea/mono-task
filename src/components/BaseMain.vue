@@ -1,7 +1,7 @@
 <template>
   <main
     id="content"
-    class="border-[rgb(50, 50, 50)] flex flex-col flex-nowrap border-solid focus:border-4 focus:outline-0"
+    class="border-secondary flex flex-col flex-nowrap border-solid focus:border-4 focus:outline-0"
     tabindex="-1"
     ref="mainEl"
     :style="pageMinHeight"

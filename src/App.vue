@@ -1,5 +1,6 @@
 <template>
-  <router-view></router-view>
+  <base-skip-link v-focus to="#content" label="Skip to main content" />
+  <router-view> </router-view>
 </template>
 
 <script setup lang="ts">
@@ -10,6 +11,8 @@ import { useAppStore } from "./stores/useAppStore";
 import { useMyColorModeStore } from "./stores/useMyColorModeStore";
 import { RouterView } from "vue-router";
 import { useHead } from "@unhead/vue";
+import { vFocus } from "@/directives/v-focus.js";
+import BaseSkipLink from "@/components/BaseSkipLink.vue";
 
 defineOptions({
   name: "App",
