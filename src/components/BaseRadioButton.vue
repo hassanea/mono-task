@@ -11,13 +11,13 @@
       <template v-for="choice in choices" :key="choice.toLowerCase()">
         <input
           type="radio"
-          :id="radioButtonId"
+          :id="`${choice.toLowerCase()}-${radioButtonId}`"
           :name="`radio-${radioButtonId}`"
           :value="choice"
           v-model="model"
           class="radio-button-transition accent-highlight checked:border-secondary focus:outline-highlight relative top-1 mb-1 h-7 w-7 appearance-none rounded-full border-2 border-solid border-black checked:border-9 focus:outline-2 focus:outline-solid md:mb-0"
         />
-        <base-input-label :id="radioButtonId" variant="radio">
+        <base-input-label :id="`${choice.toLowerCase()}-${radioButtonId}`" variant="radio">
           {{ choice }}
         </base-input-label>
       </template>
