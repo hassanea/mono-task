@@ -30,30 +30,30 @@
     "focus-trap": "^8.2.2",
     "pinia": "^4.0.3",
     "tailwindcss": "^4.3.3",
-    "uuid": "^14.0.1",
+    "uuid": "^14.0.2",
     "vue": "^3.5.32",
-    "vue-router": "^5.2.0"
+    "vue-router": "^5.3.0"
   },
   "devDependencies": {
-    "@tsconfig/node24": "^24.0.4",
-    "@types/node": "^26.2.0",
+    "@tsconfig/node24": "^24.0.5",
+    "@types/node": "^26.4.0",
     "@vitejs/plugin-vue": "^6.0.8",
     "@vue/eslint-config-typescript": "^14.9.0",
     "@vue/tsconfig": "^0.9.1",
-    "eslint": "^10.8.1",
+    "eslint": "^10.9.1",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-oxlint": "~1.78.0",
+    "eslint-plugin-oxlint": "~1.80.0",
     "eslint-plugin-vue": "~10.10.0",
-    "fontaine": "^0.8.0",
+    "fontaine": "^0.8.1",
     "jiti": "^2.7.0",
     "npm-run-all2": "^9.0.3",
-    "oxlint": "~1.78.0",
+    "oxlint": "~1.80.0",
     "prettier": "3.9.6",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "typescript": "~7.0.2",
-    "vite": "^8.2.1",
+    "vite": "^8.2.2",
     "vite-plugin-vue-devtools": "^8.2.1",
-    "vue-tsc": "^3.3.9"
+    "vue-tsc": "^3.3.11"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
